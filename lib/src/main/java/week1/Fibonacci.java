@@ -1,19 +1,30 @@
 package week1;
 
+
 public class Fibonacci {
-    public static void main(int[] args){
-
-
+    public static void main(String[] args) {
+        System.out.println(getFibonacciSequence(5));
     }
-    private static String recursion(int n){
-        int i=0;
-        String result= "";
-        for(i=0; i<n ; i++){
-            if (i ==0){
-                result += i;
-            }
+
+    public static String getFibonacciSequence(int n) {
+        int[] fib = new int[n];
+        String result = "";
+        fib[0] = 0;
+        fib[1] = 1;
+
+        for (int i = 2; i < n; i++) {
+            fib[i] = fib[i - 1] + fib[i - 2];
         }
-        return "fsaf";
+
+        for (int i = 0;i<fib.length;i++){
+            result += Integer.toString(fib[i]);
+            if (i != fib.length-1){
+                result += ",";
+            }
+
+        }
+
+        return result;
     }
 }
 
