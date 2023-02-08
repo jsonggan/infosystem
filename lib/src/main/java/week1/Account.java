@@ -34,8 +34,8 @@ public class Account {
     public double getAnnualInterestRate(){
         return annualInterestRate;
     }
-    public void setAnnualInterestRate(double annualInterestRate){
-        this.annualInterestRate = annualInterestRate;
+    public static void setAnnualInterestRate(double annualInterestRate){
+        Account.annualInterestRate = annualInterestRate;
     }
 
     public Date getDateCreated(){
@@ -47,13 +47,13 @@ public class Account {
     }
 
     public double getMonthlyInterest(){
-        return getBalance() * getMonthlyInterestRate()/100.0;
+        return getBalance() * (getMonthlyInterestRate()/100.0);
     }
 
     public void withdraw(double amount){
         setBalance(getBalance() - amount);
     }
-    public void deposite(double amount){
+    public void deposit(double amount){
         setBalance(getBalance() + amount);
     }
 }

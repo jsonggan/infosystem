@@ -15,6 +15,14 @@ public class IteratingExamples {
         return sum;
     }
 
+    public static int Act2ForEach(List<Integer> integers){
+        int result = 0;
+        for (int i=0;i<integers.size();i++){
+            result += integers.get(i);
+        }
+        return result;
+    }
+
     public static int iteration(List<Integer> integers){
         if (integers.size() == 1){
             return integers.get(0);
