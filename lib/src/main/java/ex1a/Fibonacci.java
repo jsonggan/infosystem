@@ -1,4 +1,4 @@
-package week1;
+package ex1a;
 
 
 public class Fibonacci {

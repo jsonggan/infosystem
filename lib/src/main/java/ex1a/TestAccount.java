@@ -1,4 +1,6 @@
-package week1;
+package ex1a;
+
+import ex1a.Account;
 
 public class TestAccount{
     public static void main (String[] args) {
