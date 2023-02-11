@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_11_2_2023_9_22_PM_[Changes]" date="1676121734742" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_2_2023_9_22_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 11/2/2023 9:22 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="lib/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="AFTER_PATH" value="lib/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_2_2023_9_22_PM_[Changes]/previous-compilation-data.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="lib/build/classes/java/main/week1/Account.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="lib/build/classes/java/main/week1/Fibonacci.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+</changelist>
