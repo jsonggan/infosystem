@@ -1,5 +1,8 @@
 package piwords;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AlphabetGenerator {
     /**
      * Given a numeric base, return a char[] that maps every digit that is
@@ -50,9 +53,51 @@ public class AlphabetGenerator {
      * @return A char[] that maps every digit of the base to a char that the
      *         digit should be translated into.
      */
+    public static final char[] BASIC_ALPHABET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     public static char[] generateFrequencyAlphabet(int base,
                                                    String[] trainingData) {
-        // TODO: Implement (Problem f)
-        return null;
+
+        if(base<0) return null;
+        if (base ==0) {
+            char[] empty ={} ;
+            return empty;
+        }
+
+        Map<Character, Integer> charMap = new HashMap<>();
+
+        for (char i:BASIC_ALPHABET) charMap.put(i,0);
+
+        int total_chars = 0;
+        for (String str : trainingData){
+            for(int i =0; i<str.length();i++){
+                if(charMap.containsKey(str.charAt(i))){
+                    total_chars++;
+                    charMap.put(str.charAt(i),charMap.get(str.charAt(i))+1);
+                }
+
+            }
+        }
+
+        //into CDF
+        Map<Character,Float> probability = new HashMap<>();
+        float prior = 0f;
+        for (char i : BASIC_ALPHABET){
+            float prob = (float) charMap.get(i)/total_chars;
+            probability.put(i,prob+prior);
+            prior += prob;
+        }
+
+        char[] output =new char[base];
+        int j=0;
+        for (char i:BASIC_ALPHABET){
+            int upper =Math.round(probability.get(i)*base) -1;
+            while((j<= upper)&& (j<base)){
+                output[j]=i;
+                j++;
+            }
+        }
+
+        return output;
     }
 }
