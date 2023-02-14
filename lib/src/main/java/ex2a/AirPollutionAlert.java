@@ -3,6 +3,8 @@ package ex2a;
 //**SEE BELOW** modify AirPollutionAlert
 //Necessary Import statements here
 
+import java.util.ArrayList;
+
 // **** YOU DO NOT NEED TO MODIFY THIS PART OF THE CODE -------
 interface Observer{
     void update(double airPollutionIndex);
@@ -27,6 +29,11 @@ class Subscriber implements Observer{
     }
 }
 
+class AnotherClass implements Observer{
+    @Override
+    public void update(double airPollutionIndex) {
+}}
+
 interface Subject{
     void register(Observer o);
     void unregister(Observer o);
@@ -37,26 +44,26 @@ interface Subject{
 //TODO: modify AirPollutionAlert to implement interface Subject, under Observer design pattern
 class AirPollutionAlert implements Subject {
     private double airPollutionIndex;
-
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     public void setAirPollutionIndex(double airPollutionIndex) {
         this.airPollutionIndex = airPollutionIndex;
         notifyObservers();
     }
 
-    //register a subscriber to airPollutionAlert
     public void register(Observer o ){
-
+        observers.add(o);
     }
 
-    //unregister a subscriber from airPollutionAlert
     public void unregister(Observer o){
-
+        observers.remove(o);
     }
 
-    //should call update in in subscriber
     public void notifyObservers(){
         if(this.airPollutionIndex>100){
+            for( Observer o:observers){
+                o.update(this.airPollutionIndex);
+            }
         }
     }
 }
