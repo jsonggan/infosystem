@@ -1,5 +1,7 @@
 package piano;
 
+import java.util.ArrayList;
+
 import javax.sound.midi.MidiUnavailableException;
 
 import midi.Midi;
@@ -8,6 +10,7 @@ import music.Pitch;
 public class PianoMachine {
 	
 	private Midi midi;
+    private ArrayList<Pitch> pitchesCollection = new ArrayList<>();
     
 	/**
 	 * constructor for PianoMachine.
@@ -26,14 +29,20 @@ public class PianoMachine {
     
     //TODO write method spec
     public void beginNote(Pitch rawPitch) {
-    	midi.beginNote(new Pitch(0).toMidiFrequency());
+//        if(!pitchesCollection.contains(rawPitch)){
+            midi.beginNote(rawPitch.toMidiFrequency());
+//        }
+
+
+        pitchesCollection.add(rawPitch);
     	//TODO implement for question 1
 
     }
     
     //TODO write method spec
     public void endNote(Pitch rawPitch) {
-    	midi.endNote(new Pitch(0).toMidiFrequency());
+    	midi.endNote(rawPitch.toMidiFrequency());
+        pitchesCollection.remove(rawPitch);
     	//TODO implement for question 1
     }
     
