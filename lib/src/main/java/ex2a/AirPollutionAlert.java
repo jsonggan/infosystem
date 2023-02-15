@@ -29,10 +29,6 @@ class Subscriber implements Observer{
     }
 }
 
-class AnotherClass implements Observer{
-    @Override
-    public void update(double airPollutionIndex) {
-}}
 
 interface Subject{
     void register(Observer o);
