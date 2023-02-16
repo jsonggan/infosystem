@@ -11,7 +11,7 @@ public class PianoMachine {
 	
 	private Midi midi;
     private ArrayList<Pitch> pitchesCollection = new ArrayList<>();
-    
+
 	/**
 	 * constructor for PianoMachine.
 	 * 
@@ -26,26 +26,23 @@ public class PianoMachine {
             return;
         }
     }
-    
+
     //TODO write method spec
     public void beginNote(Pitch rawPitch) {
-//        if(!pitchesCollection.contains(rawPitch)){
+        if(pitchesCollection.isEmpty()  || rawPitch.toMidiFrequency()!=pitchesCollection.get(0).toMidiFrequency()){
+            pitchesCollection.add(rawPitch);
             midi.beginNote(rawPitch.toMidiFrequency());
-//        }
-
-
-        pitchesCollection.add(rawPitch);
-    	//TODO implement for question 1
-
+        }
     }
-    
+
     //TODO write method spec
     public void endNote(Pitch rawPitch) {
-    	midi.endNote(rawPitch.toMidiFrequency());
-        pitchesCollection.remove(rawPitch);
-    	//TODO implement for question 1
+        if(!pitchesCollection.isEmpty() && pitchesCollection.contains(rawPitch)) {
+            midi.endNote(rawPitch.toMidiFrequency());
+            pitchesCollection.remove(rawPitch);
+        }
     }
-    
+
     //TODO write method spec
     public void changeInstrument() {
        	//TODO: implement for question 2
