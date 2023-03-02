@@ -1,9 +1,11 @@
 package piano;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.midi.MidiUnavailableException;
 
+import midi.Instrument;
 import midi.Midi;
 import music.Pitch;
 
@@ -11,6 +13,13 @@ public class PianoMachine {
 	
 	private Midi midi;
     private ArrayList<Pitch> pitchesCollection = new ArrayList<>();
+    private static Instrument instrument = Instrument.PIANO;
+
+    public static void main(String[] args) {
+        for (int i =0 ; i<5;i++){
+            System.out.println(instrument);
+            instrument = instrument.next();}
+    }
 
 	/**
 	 * constructor for PianoMachine.
@@ -45,8 +54,30 @@ public class PianoMachine {
 
     //TODO write method spec
     public void changeInstrument() {
-       	//TODO: implement for question 2
+        //1. make sure instrument state is changing in piano machine
+//        instrument = instrument.next();
+//        for (Pitch pitch: pitchesCollection){
+//            midi.beginNote(pitch.toMidiFrequency(),instrument);
+//            midi.endNote(pitch.toMidiFrequency(),instrument);
+//
+//        }
+
+
+        // Get the current set of pitches
+        List<Pitch> currentPitches = new ArrayList<>(pitchesCollection);
+
+        // Stop playing all notes using the current instrument
+        for (Pitch pitch : currentPitches) {
+            midi.endNote(pitch.toMidiFrequency(), instrument);
+        }
+        instrument = instrument.next();
+        // Play all notes using the new instrument
+        for (Pitch pitch : currentPitches) {
+            midi.beginNote(pitch.toMidiFrequency(), instrument);
+        }
+
     }
+
     
     //TODO write method spec
     public void shiftUp() {
