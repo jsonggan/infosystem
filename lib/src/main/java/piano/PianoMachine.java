@@ -14,6 +14,7 @@ public class PianoMachine {
 	private Midi midi;
     private ArrayList<Pitch> pitchesCollection = new ArrayList<>();
     private Instrument instrument = midi.DEFAULT_INSTRUMENT;
+    private int shifting = 0;
 
 
 
@@ -32,23 +33,23 @@ public class PianoMachine {
         }
     }
 
-    //TODO write method spec
+    // begin to play note with instrument
     public void beginNote(Pitch rawPitch) {
         if(pitchesCollection.isEmpty()  || rawPitch.toMidiFrequency()!=pitchesCollection.get(0).toMidiFrequency()){
             pitchesCollection.add(rawPitch);
-            midi.beginNote(rawPitch.toMidiFrequency(),instrument);
+            midi.beginNote(rawPitch.toMidiFrequency() +(shifting*12),instrument);
         }
     }
 
-    //TODO write method spec
+    // stop to play note with instrument
     public void endNote(Pitch rawPitch) {
         if(!pitchesCollection.isEmpty() && pitchesCollection.contains(rawPitch)) {
-            midi.endNote(rawPitch.toMidiFrequency(),instrument);
+            midi.endNote(rawPitch.toMidiFrequency()+(shifting*12),instrument);
             pitchesCollection.remove(rawPitch);
         }
     }
 
-    //TODO write method spec
+    //change the instrument instance
     public void changeInstrument() {
         instrument = instrument.next();
     }
@@ -56,12 +57,16 @@ public class PianoMachine {
     
     //TODO write method spec
     public void shiftUp() {
-    	//TODO: implement for question 3
+        if(shifting<2){
+    	    shifting ++;
+        }
     }
     
     //TODO write method spec
     public void shiftDown() {
-    	//TODO: implement for question 3
+        if(shifting>-2) {
+            shifting--;
+        }
     }
     
     //TODO write method spec
