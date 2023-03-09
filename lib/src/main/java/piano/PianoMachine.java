@@ -1,5 +1,7 @@
 package piano;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import javax.sound.midi.MidiUnavailableException;
 
 import midi.Instrument;
 import midi.Midi;
+import music.NoteEvent;
 import music.Pitch;
 
 public class PianoMachine {
@@ -15,6 +18,9 @@ public class PianoMachine {
     private ArrayList<Pitch> pitchesCollection = new ArrayList<>();
     private Instrument instrument = midi.DEFAULT_INSTRUMENT;
     private int shifting = 0;
+    private String recording = "";
+    private ArrayList<NoteEvent> recordingNote = new ArrayList<>();
+    private Boolean isRecording = false;
 
 
 
@@ -39,6 +45,10 @@ public class PianoMachine {
             pitchesCollection.add(rawPitch);
             midi.beginNote(rawPitch.toMidiFrequency() +(shifting*12),instrument);
         }
+
+        if(isRecording){
+             recordingNote.add(new NoteEvent(rawPitch, System.currentTimeMillis()/10,instrument, NoteEvent.Kind.start));
+        }
     }
 
     // stop to play note with instrument
@@ -47,6 +57,9 @@ public class PianoMachine {
             midi.endNote(rawPitch.toMidiFrequency()+(shifting*12),instrument);
             pitchesCollection.remove(rawPitch);
         }
+        if(isRecording){
+            recordingNote.add(new NoteEvent(rawPitch, System.currentTimeMillis()/10,instrument, NoteEvent.Kind.stop));
+        }
     }
 
     //change the instrument instance
@@ -54,30 +67,42 @@ public class PianoMachine {
         instrument = instrument.next();
     }
 
-    
-    //TODO write method spec
+    // shiftup pitch
     public void shiftUp() {
         if(shifting<2){
     	    shifting ++;
         }
     }
     
-    //TODO write method spec
+    // shiftdown pitch
     public void shiftDown() {
         if(shifting>-2) {
             shifting--;
         }
     }
-    
-    //TODO write method spec
+
     public boolean toggleRecording() {
-    	return false;
-    	//TODO: implement for question 4
+        if(isRecording == false) {
+            recordingNote.clear();
+        }
+        isRecording =!isRecording;
+    	return isRecording;
     }
     
     //TODO write method spec
     public void playback() {    	
-        //TODO: implement for question 4
+        for (int i =0; i<recordingNote.size();i++){
+            NoteEvent noteEvent = recordingNote.get(i);
+
+            if(noteEvent.getKind() == NoteEvent.Kind.start) midi.beginNote(noteEvent.getPitch().toMidiFrequency(),noteEvent.getInstr());
+            else midi.endNote(noteEvent.getPitch().toMidiFrequency(),noteEvent.getInstr());
+
+            if(i<recordingNote.size()-1){
+                NoteEvent nextNoteEvent = recordingNote.get(i+1);
+                int delay =(int)( nextNoteEvent.getTime() - noteEvent.getTime());
+                Midi.rest(delay);
+            }
+        }
     }
 
 }
