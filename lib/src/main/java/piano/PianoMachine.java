@@ -13,13 +13,9 @@ public class PianoMachine {
 	
 	private Midi midi;
     private ArrayList<Pitch> pitchesCollection = new ArrayList<>();
-    private static Instrument instrument = Instrument.PIANO;
+    private Instrument instrument = midi.DEFAULT_INSTRUMENT;
 
-    public static void main(String[] args) {
-        for (int i =0 ; i<5;i++){
-            System.out.println(instrument);
-            instrument = instrument.next();}
-    }
+
 
 	/**
 	 * constructor for PianoMachine.
@@ -40,42 +36,21 @@ public class PianoMachine {
     public void beginNote(Pitch rawPitch) {
         if(pitchesCollection.isEmpty()  || rawPitch.toMidiFrequency()!=pitchesCollection.get(0).toMidiFrequency()){
             pitchesCollection.add(rawPitch);
-            midi.beginNote(rawPitch.toMidiFrequency());
+            midi.beginNote(rawPitch.toMidiFrequency(),instrument);
         }
     }
 
     //TODO write method spec
     public void endNote(Pitch rawPitch) {
         if(!pitchesCollection.isEmpty() && pitchesCollection.contains(rawPitch)) {
-            midi.endNote(rawPitch.toMidiFrequency());
+            midi.endNote(rawPitch.toMidiFrequency(),instrument);
             pitchesCollection.remove(rawPitch);
         }
     }
 
     //TODO write method spec
     public void changeInstrument() {
-        //1. make sure instrument state is changing in piano machine
-//        instrument = instrument.next();
-//        for (Pitch pitch: pitchesCollection){
-//            midi.beginNote(pitch.toMidiFrequency(),instrument);
-//            midi.endNote(pitch.toMidiFrequency(),instrument);
-//
-//        }
-
-
-        // Get the current set of pitches
-        List<Pitch> currentPitches = new ArrayList<>(pitchesCollection);
-
-        // Stop playing all notes using the current instrument
-        for (Pitch pitch : currentPitches) {
-            midi.endNote(pitch.toMidiFrequency(), instrument);
-        }
         instrument = instrument.next();
-        // Play all notes using the new instrument
-        for (Pitch pitch : currentPitches) {
-            midi.beginNote(pitch.toMidiFrequency(), instrument);
-        }
-
     }
 
     
